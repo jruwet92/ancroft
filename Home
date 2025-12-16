@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancroft Distillery | By Invitation Only</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #1a3d2e;
+            --copper: #8b6f47;
+            --dark-bronze: #6b5637;
+            --cream: #f8f6f0;
+            --off-white: #ede8dc;
+            --sage: #2d5f4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--cream);
+            color: var(--forest-green);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(248, 246, 240, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 25px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(26, 61, 46, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            color: var(--forest-green);
+            letter-spacing: 6px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Libre Baskerville', serif;
+            color: var(--forest-green);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--copper);
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--copper);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(26, 61, 46, 0.7), rgba(26, 61, 46, 0.5)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%231a3d2e" width="1200" height="800"/><path fill="%232d5f4a" opacity="0.3" d="M0 400 Q300 200 600 400 T1200 400 V800 H0Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(248, 246, 240, 0.02) 2px,
+                rgba(248, 246, 240, 0.02) 4px
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 0 40px;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .hero-crest-img {
+            width: 180px;
+            height: auto;
+            margin: 0 auto 40px;
+            display: block;
+            filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5));
+            animation: scaleIn 0.8s ease 0.8s both;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 80px;
+            color: var(--cream);
+            letter-spacing: 12px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero .tagline {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 18px;
+            color: var(--copper);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .hero .motto {
+            font-size: 24px;
+            color: var(--off-white);
+            font-style: italic;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+        }
+
+        .hero-divider {
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--copper), transparent);
+            margin: 30px auto;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--copper);
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        /* Sections */
+        section {
+            padding: 120px 80px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 56px;
+            color: var(--forest-green);
+            letter-spacing: 6px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 16px;
+            color: var(--copper);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Story Section */
+        .story {
+            background: var(--off-white);
+        }
+
+        .story-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 20px;
+            line-height: 2;
+            color: var(--dark-bronze);
+        }
+
+        .story-content p {
+            margin-bottom: 30px;
+        }
+
+        .story-highlight {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 24px;
+            color: var(--forest-green);
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            border-top: 1px solid var(--copper);
+            border-bottom: 1px solid var(--copper);
+            font-style: italic;
+        }
+
+        /* Collection Preview Section */
+        .collection-preview {
+            background: var(--forest-green);
+            color: var(--cream);
+        }
+
+        .collection-preview .section-title {
+            color: var(--cream);
+        }
+
+        .collection-preview .section-subtitle {
+            color: var(--copper);
+        }
+
+        .collection-preview-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .collection-preview-content p {
+            font-size: 20px;
+            line-height: 2;
+            color: var(--off-white);
+            margin-bottom: 30px;
+        }
+
+        .view-collection-btn {
+            display: inline-block;
+            font-family: 'Libre Baskerville', serif;
+            padding: 18px 50px;
+            border: 2px solid var(--copper);
+            background: var(--copper);
+            color: var(--cream);
+            font-size: 14px;
+            cursor: pointer;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            margin-top: 30px;
+        }
+
+        .view-collection-btn:hover {
+            background: transparent;
+            color: var(--copper);
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            background: var(--off-white);
+            color: var(--forest-green);
+        }
+
+        .philosophy .section-title {
+            color: var(--forest-green);
+        }
+
+        .philosophy .section-subtitle {
+            color: var(--copper);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .philosophy-card {
+            text-align: center;
+            padding: 40px;
+            border: 1px solid rgba(26, 61, 46, 0.3);
+        }
+
+        .philosophy-card .icon {
+            font-size: 60px;
+            margin-bottom: 25px;
+        }
+
+        .philosophy-card h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            color: var(--forest-green);
+        }
+
+        .philosophy-card p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--dark-bronze);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--forest-green);
+            color: var(--cream);
+        }
+
+        .contact .section-title {
+            color: var(--cream);
+        }
+
+        .contact .section-subtitle {
+            color: var(--copper);
+        }
+
+        .contact-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-content p {
+            font-size: 20px;
+            line-height: 2;
+            color: var(--off-white);
+            margin-bottom: 40px;
+        }
+
+        .contact-info {
+            margin-top: 60px;
+        }
+
+        .contact-info div {
+            margin: 20px 0;
+            font-size: 18px;
+            color: var(--cream);
+        }
+
+        .contact-info strong {
+            font-family: 'Libre Baskerville', serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: var(--copper);
+        }
+
+        /* Experience Section */
+        .experience {
+            background: var(--off-white);
+        }
+
+        .experience-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .experience-content p {
+            font-size: 20px;
+            line-height: 2;
+            color: var(--dark-bronze);
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--forest-green);
+            color: var(--cream);
+            padding: 60px 80px;
+            text-align: center;
+        }
+
+        footer .logo {
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        footer .motto {
+            font-size: 16px;
+            font-style: italic;
+            color: var(--copper);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        footer .copyright {
+            font-size: 14px;
+            color: var(--off-white);
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+                letter-spacing: 6px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            section {
+                padding: 80px 30px;
+            }
+
+            .age-modal-content {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="home.html" class="logo">
+            <img src="ancroft_wordmark.png" alt="Ancroft" style="height: 35px; width: auto;">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#philosophy">Philosophy</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="ancroft_crest.png" alt="Ancroft Crest" class="hero-crest-img">
+            <h1>ANCROFT</h1>
+            <p class="tagline">By Invitation Only</p>
+            <div class="hero-divider"></div>
+            <p class="motto">Per Tempus, Per Ignem, Per Aquam</p>
+            <p style="color: var(--off-white); font-size: 16px; letter-spacing: 2px;">Through Time, Through Fire, Through Water</p>
+        </div>
+        <div class="scroll-indicator">Scroll to Discover ↓</div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story" id="story">
+        <h2 class="section-title">The Legacy</h2>
+        <p class="section-subtitle">Since 1743</p>
+        
+        <div class="story-content">
+            <p>Nestled in the remote Cairngorms, at the edge of the Blackwater Glen, Ancroft Distillery sits on land that has been producing whisky since 1743. The distillery draws its water from the Ancroft Spring, a source that flows through granite and peat beds untouched for millennia.</p>
+            
+            <p>The distillery takes its name from the Ancroft family, landed gentry who held the glen for seven generations. In 1891, Malcolm Ancroft, the last heir, disappeared while walking the moors during a winter storm. His body was never found, but his private study remained sealed until 1923, when it was discovered to contain detailed journals describing experimental aging techniques and rare cask finishes.</p>
+            
+            <div class="story-highlight">
+                "We do not sell whisky. We find its rightful guardians."
+            </div>
+            
+            <p>In 2003, master distiller Fiona Drummond discovered Malcolm Ancroft's journals in the estate archives. She spent two decades perfecting his techniques, combining Victorian-era innovation with modern precision. The distillery was relaunched in 2023 with a radical philosophy: create whisky so exceptional that it cannot be purchased—only received.</p>
+            
+            <p>Each bottle is a covenant—between the distiller who crafted it, the Keeper who receives it, and those who will share in its story. This is not ownership. This is stewardship of something greater than ourselves.</p>
+        </div>
+    </section>
+
+    <!-- Collection Section (Link to Full Page) -->
+    <section class="collection-preview" id="collection">
+        <h2 class="section-title">The Collection</h2>
+        <p class="section-subtitle">Four Expressions, One Legacy</p>
+        
+        <div class="collection-preview-content">
+            <p>Each expression in the Ancroft collection tells a chapter of our 280-year story. From the accessible Gateway to the profound Legacy, our whiskies represent decades of craft, patience, and unwavering dedication to quality.</p>
+            
+            <p>Whether you seek an introduction to Ancroft or aspire to join the Keeper's Circle, discover the expression that awaits you.</p>
+            
+            <a href="collection.html" class="view-collection-btn">Explore The Collection</a>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy" id="philosophy">
+        <h2 class="section-title">The Keeper's Philosophy</h2>
+        <p class="section-subtitle">More Than Whisky</p>
+        
+        <div class="philosophy-grid">
+            <div class="philosophy-card">
+                <div class="icon">🔑</div>
+                <h4>Guardianship</h4>
+                <p>We believe in stewardship over ownership. Each Keeper is a guardian of tradition, entrusted with whisky that has been crafted with extraordinary care and patience.</p>
+            </div>
+            
+            <div class="philosophy-card">
+                <div class="icon">⚖️</div>
+                <h4>Heritage</h4>
+                <p>Every bottle connects you to 280 years of whisky-making history. From Malcolm Ancroft's lost journals to today's innovations, we honor the past while embracing the future.</p>
+            </div>
+            
+            <div class="philosophy-card">
+                <div class="icon">🤝</div>
+                <h4>Community</h4>
+                <p>The Keeper's Circle is more than a membership—it's a fellowship of those who appreciate whisky as art, history, and shared experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Join the Circle</h2>
+        <p class="section-subtitle">Become a Keeper</p>
+        
+        <div class="contact-content">
+            <p>New Keepers must be nominated by two existing Keepers, selected by the Master Keeper for exceptional contributions to whisky culture, or win the annual Keeper's Challenge competition.</p>
+            
+            <p>If you have been nominated or wish to inquire about membership, we invite you to reach out.</p>
+            
+            <div class="contact-info">
+                <div><strong>For Nomination:</strong><br><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fc9799998c998ebc9d929f8e939a8898958f88959090998e85d28f9f9388">[email&#160;protected]</a></div>
+                <div><strong>Estate Address:</strong><br>Ancroft Distillery, Blackwater Glen<br>Cairngorms, Scotland</div>
+                <div><strong>Phone:</strong><br>By invitation only</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience">
+        <h2 class="section-title">The Ancroft Experience</h2>
+        <p class="section-subtitle">Visit The Distillery</p>
+        
+        <div class="experience-content">
+            <p>By appointment only, we welcome a select number of guests to the Blackwater Glen. Experience the heart of Ancroft—from the 1743 warehouses to Malcolm Ancroft's sealed study.</p>
+            
+            <p>Each visit includes a private tour with our Master Distiller, tastings from rare casks, and the opportunity to bottle directly from a selected barrel. This is not a commercial tour—it is an intimate encounter with 280 years of whisky heritage.</p>
+            
+            <p><strong>Limited to 12 guests per day.</strong></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <img src="ancroft_wordmark.png" alt="Ancroft" style="width: 250px; height: auto; margin: 0 auto 20px; display: block; filter: brightness(0) invert(1);">
+        <p class="motto">Per Tempus, Per Ignem, Per Aquam</p>
+        <p class="copyright">© 2025 Ancroft Distillery. All rights reserved. | Est. 1743</p>
+    </footer>
+
+    <script>
+        // Check if age verification has been completed
+        if (!sessionStorage.getItem('ageVerified')) {
+            window.location.href = 'age-verification.html';
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
