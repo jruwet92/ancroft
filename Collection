@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Collection | Ancroft Distillery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #1a3d2e;
+            --copper: #8b6f47;
+            --dark-bronze: #6b5637;
+            --cream: #f8f6f0;
+            --off-white: #ede8dc;
+            --sage: #2d5f4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--cream);
+            color: var(--forest-green);
+            overflow-x: hidden;
+            padding-top: 90px;
+        }
+
+        /* Invitation Modal */
+        .invitation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 61, 46, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .invitation-modal.active {
+            display: flex;
+        }
+
+        .invitation-modal-content {
+            background: var(--cream);
+            padding: 60px;
+            border: 3px solid var(--copper);
+            max-width: 650px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.5s ease;
+        }
+
+        .invitation-modal-content::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid var(--forest-green);
+            pointer-events: none;
+        }
+
+        .invitation-modal h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            color: var(--forest-green);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .invitation-modal .subtitle {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 14px;
+            color: var(--copper);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .invitation-modal p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--dark-bronze);
+            margin-bottom: 25px;
+        }
+
+        .invitation-form-group {
+            margin-bottom: 25px;
+        }
+
+        .invitation-form-group label {
+            display: block;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 13px;
+            color: var(--forest-green);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .invitation-form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--forest-green);
+            background: var(--off-white);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            color: var(--forest-green);
+            transition: all 0.3s ease;
+        }
+
+        .invitation-form-group input:focus {
+            outline: none;
+            border-color: var(--copper);
+            background: white;
+        }
+
+        .invitation-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .invitation-btn {
+            font-family: 'Libre Baskerville', serif;
+            padding: 16px 40px;
+            border: 2px solid var(--forest-green);
+            background: var(--forest-green);
+            color: var(--cream);
+            font-size: 14px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            flex: 1;
+        }
+
+        .invitation-btn:hover {
+            background: transparent;
+            color: var(--forest-green);
+        }
+
+        .invitation-btn.cancel {
+            background: transparent;
+            color: var(--forest-green);
+        }
+
+        .invitation-btn.cancel:hover {
+            background: var(--dark-bronze);
+            border-color: var(--dark-bronze);
+            color: var(--cream);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(248, 246, 240, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 25px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(26, 61, 46, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            color: var(--forest-green);
+            letter-spacing: 6px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Libre Baskerville', serif;
+            color: var(--forest-green);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--copper);
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--copper);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 80px 40px 60px;
+            background: var(--off-white);
+        }
+
+        .page-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 64px;
+            color: var(--forest-green);
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+        }
+
+        .page-header .tagline {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 16px;
+            color: var(--copper);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Collection Section */
+        .collection {
+            padding: 80px;
+            background: var(--cream);
+        }
+
+        .collection-intro {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            text-align: center;
+            font-size: 20px;
+            line-height: 2;
+            color: var(--dark-bronze);
+        }
+
+        .bottles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .bottle-card {
+            background: var(--off-white);
+            border: 2px solid var(--forest-green);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .bottle-card::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid var(--copper);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .bottle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .bottle-card:hover::before {
+            opacity: 1;
+        }
+
+        .bottle-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            filter: grayscale(20%);
+        }
+
+        .bottle-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            color: var(--forest-green);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .bottle-card .age {
+            font-size: 60px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .bottle-card .descriptor {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 14px;
+            color: var(--copper);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .bottle-card .details {
+            font-size: 16px;
+            color: var(--dark-bronze);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .bottle-card .price {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            color: var(--forest-green);
+            margin: 20px 0;
+            font-weight: 600;
+        }
+
+        .bottle-card .status {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 12px;
+            color: var(--copper);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        .acquire-btn {
+            font-family: 'Libre Baskerville', serif;
+            padding: 15px 40px;
+            border: 2px solid var(--forest-green);
+            background: transparent;
+            color: var(--forest-green);
+            font-size: 13px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            margin-top: 20px;
+        }
+
+        .acquire-btn:hover {
+            background: var(--forest-green);
+            color: var(--cream);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--forest-green);
+            color: var(--cream);
+            padding: 60px 80px;
+            text-align: center;
+        }
+
+        footer .logo {
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        footer .motto {
+            font-size: 16px;
+            font-style: italic;
+            color: var(--copper);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        footer .copyright {
+            font-size: 14px;
+            color: var(--off-white);
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .page-header h1 {
+                font-size: 42px;
+            }
+
+            .collection {
+                padding: 60px 30px;
+            }
+
+            .bottles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Invitation Modal -->
+    <div class="invitation-modal" id="invitationModal">
+        <div class="invitation-modal-content">
+            <h3>By Invitation Only</h3>
+            <p class="subtitle">The Keeper's Circle</p>
+            <p>To acquire bottles from the Ancroft Collection, you must be nominated by two existing Keepers. This ensures that our whisky finds its way to those who will truly appreciate and honor its legacy.</p>
+            <p><strong>Please provide the names of your two nominators:</strong></p>
+            
+            <div class="invitation-form-group">
+                <label>First Keeper's Full Name</label>
+                <input type="text" id="keeper1" placeholder="Enter first nominator's name">
+            </div>
+            
+            <div class="invitation-form-group">
+                <label>Second Keeper's Full Name</label>
+                <input type="text" id="keeper2" placeholder="Enter second nominator's name">
+            </div>
+            
+            <div class="invitation-buttons">
+                <button class="invitation-btn cancel" onclick="closeInvitationModal()">Cancel</button>
+                <button class="invitation-btn" onclick="submitNomination()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="home.html" class="logo">
+            <img src="ancroft_wordmark.png" alt="Ancroft" style="height: 35px; width: auto;">
+        </a>
+        <ul class="nav-links">
+            <li><a href="home.html#story">Our Story</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="home.html#philosophy">Philosophy</a></li>
+            <li><a href="home.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>THE COLLECTION</h1>
+        <p class="tagline">From Gateway to Legacy</p>
+    </div>
+
+    <!-- Collection Section -->
+    <section class="collection">
+        <div class="collection-intro">
+            <p>Each expression in the Ancroft collection represents a distinct chapter in our distillery's story. From the approachable Gateway to the profound Legacy, every bottle is crafted with unwavering dedication to quality and tradition.</p>
+        </div>
+
+        <div class="bottles-grid">
+            <!-- Ancroft 7 -->
+            <div class="bottle-card" onclick="showPurchaseModal('Ancroft 7', true)">
+                <div class="bottle-icon">🥃</div>
+                <h3>ANCROFT <span class="age">7</span></h3>
+                <p class="descriptor">The Gateway</p>
+                <p class="details">American oak bourbon barrels with 6-month finish in oloroso sherry casks. Light gold with honey, vanilla, green apple, and subtle coastal salinity.</p>
+                <p><strong>43% ABV | 700ml</strong></p>
+                <div class="price">£95</div>
+                <p class="status">Available for Purchase</p>
+                <button class="acquire-btn">Purchase Now</button>
+            </div>
+
+            <!-- Ancroft 18 -->
+            <div class="bottle-card" onclick="showPurchaseModal('Ancroft 18', false)">
+                <div class="bottle-icon">🥃</div>
+                <h3>ANCROFT <span class="age">18</span></h3>
+                <p class="descriptor">The Foundation</p>
+                <p class="details">First-fill European oak sherry hogsheads. Deep amber with dark chocolate, dried figs, Christmas cake, and subtle peat smoke.</p>
+                <p><strong>46% ABV | 700ml</strong></p>
+                <p class="status">By Invitation Only</p>
+                <button class="acquire-btn">Request Access</button>
+            </div>
+
+            <!-- Ancroft 25 -->
+            <div class="bottle-card" onclick="showPurchaseModal('Ancroft 25', false)">
+                <div class="bottle-icon">🥃</div>
+                <h3>ANCROFT <span class="age">25</span></h3>
+                <p class="descriptor">The Heart</p>
+                <p class="details">Marriage of oloroso sherry and Pedro Ximénez casks. Mahogany richness with raisins, leather, tobacco, dark cherry, and endless complexity.</p>
+                <p><strong>48.3% ABV | 700ml</strong></p>
+                <p class="status">By Invitation Only</p>
+                <button class="acquire-btn">Request Access</button>
+            </div>
+
+            <!-- Ancroft 35 -->
+            <div class="bottle-card" onclick="showPurchaseModal('Ancroft 35', false)">
+                <div class="bottle-icon">🥃</div>
+                <h3>ANCROFT <span class="age">35</span></h3>
+                <p class="descriptor">The Legacy</p>
+                <p class="details">Single casks selected by the Master Keeper. Each bottle unique, representing pinnacle moments in the distillery's history.</p>
+                <p><strong>Cask Strength | 700ml</strong></p>
+                <p class="status">Master Keepers Only</p>
+                <button class="acquire-btn">Request Access</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <img src="ancroft_wordmark.png" alt="Ancroft" style="width: 250px; height: auto; margin: 0 auto 20px; display: block; filter: brightness(0) invert(1);">
+        <p class="motto">Per Tempus, Per Ignem, Per Aquam</p>
+        <p class="copyright">© 2025 Ancroft Distillery. All rights reserved. | Est. 1743</p>
+    </footer>
+
+    <script>
+        // Check if age verification has been completed
+        if (!sessionStorage.getItem('ageVerified')) {
+            window.location.href = 'age-verification.html';
+        }
+
+        // Invitation Modal
+        let selectedBottle = '';
+        let isDirectPurchase = false;
+
+        function showPurchaseModal(bottleName, directPurchase) {
+            selectedBottle = bottleName;
+            isDirectPurchase = directPurchase;
+            
+            if (directPurchase) {
+                // For Ancroft 7, direct purchase
+                alert(`Thank you for your interest in ${bottleName}!\n\nThis bottle is available for direct purchase at £95.\n\nIn a production website, this would redirect to a secure checkout page.`);
+            } else {
+                // For other bottles, show invitation modal
+                document.getElementById('invitationModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeInvitationModal() {
+            document.getElementById('invitationModal').classList.remove('active');
+            document.getElementById('keeper1').value = '';
+            document.getElementById('keeper2').value = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        function submitNomination() {
+            const keeper1 = document.getElementById('keeper1').value.trim();
+            const keeper2 = document.getElementById('keeper2').value.trim();
+            
+            if (!keeper1 || !keeper2) {
+                alert('Please provide the names of both nominators.');
+                return;
+            }
+            
+            alert(`Thank you for your request to acquire ${selectedBottle}.\n\nNominators:\n1. ${keeper1}\n2. ${keeper2}\n\nOur Master Keeper will verify your nomination and contact you within 7-10 business days.\n\nPer Tempus, Per Ignem, Per Aquam`);
+            
+            closeInvitationModal();
+        }
+    </script>
+</body>
+</html>
