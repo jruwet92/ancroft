@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Verification | Ancroft Distillery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #1a3d2e;
+            --copper: #8b6f47;
+            --dark-bronze: #6b5637;
+            --cream: #f8f6f0;
+            --off-white: #ede8dc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: rgba(26, 61, 46, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .age-verification {
+            background: var(--cream);
+            padding: 60px 80px;
+            border: 3px solid var(--copper);
+            text-align: center;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            animation: scaleIn 0.6s ease 0.2s both;
+        }
+
+        .age-verification::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid var(--forest-green);
+            pointer-events: none;
+        }
+
+        .crest {
+            width: 140px;
+            height: auto;
+            margin: 0 auto 30px;
+            display: block;
+            animation: fadeInDown 0.8s ease both;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 42px;
+            color: var(--forest-green);
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+
+        p {
+            font-size: 18px;
+            color: var(--dark-bronze);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .question {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            font-family: 'Libre Baskerville', serif;
+            padding: 18px 50px;
+            border: 2px solid var(--forest-green);
+            background: transparent;
+            color: var(--forest-green);
+            font-size: 16px;
+            cursor: pointer;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--forest-green);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            color: var(--cream);
+        }
+
+        .btn.no {
+            border-color: var(--dark-bronze);
+            color: var(--dark-bronze);
+        }
+
+        .btn.no::before {
+            background: var(--dark-bronze);
+        }
+
+        /* Animations */
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .age-verification {
+                padding: 40px;
+                margin: 20px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="age-verification">
+        <img src="ancroft_crest.png" alt="Ancroft Crest" class="crest">
+        <h1>ANCROFT</h1>
+        <p>You must be of legal drinking age to enter this site.</p>
+        <p class="question">Are you 18 years of age or older?</p>
+        <div class="buttons">
+            <a href="home.html" class="btn yes">Yes, Enter</a>
+            <a href="https://www.google.com" class="btn no">No, Exit</a>
+        </div>
+    </div>
+
+    <script>
+        // Store age verification in session storage
+        document.querySelector('.btn.yes').addEventListener('click', function(e) {
+            sessionStorage.setItem('ageVerified', 'true');
+        });
+    </script>
+</body>
+</html>
