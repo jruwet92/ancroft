@@ -36,7 +36,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(26, 61, 46, 0.95);
+            background: rgba(26, 61, 46, 0.97);
             display: none;
             align-items: center;
             justify-content: center;
@@ -49,105 +49,252 @@
         }
 
         .invitation-modal-content {
-            background: var(--cream);
-            padding: 60px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--off-white) 100%);
+            padding: 70px 60px;
             border: 3px solid var(--copper);
-            max-width: 650px;
+            max-width: 750px;
             width: 90%;
             position: relative;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-            animation: slideUp 0.5s ease;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            animation: slideUp 0.6s ease;
         }
 
         .invitation-modal-content::before {
             content: '';
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
             border: 1px solid var(--forest-green);
             pointer-events: none;
         }
 
+        .invitation-modal-content::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(139, 111, 71, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
         .invitation-modal h3 {
             font-family: 'Cinzel', serif;
-            font-size: 36px;
+            font-size: 42px;
             color: var(--forest-green);
-            margin-bottom: 10px;
-            letter-spacing: 3px;
+            margin-bottom: 15px;
+            letter-spacing: 5px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .invitation-modal .subtitle {
             font-family: 'Libre Baskerville', serif;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--copper);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .modal-divider {
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--copper), transparent);
+            margin: 25px auto;
         }
 
         .invitation-modal p {
-            font-size: 17px;
-            line-height: 1.8;
+            font-size: 18px;
+            line-height: 1.9;
             color: var(--dark-bronze);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .invitation-modal p strong {
+            color: var(--forest-green);
+            font-family: 'Libre Baskerville', serif;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .nominator-section {
+            margin-bottom: 40px;
+            padding: 35px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(26, 61, 46, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nominator-section.locked {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .nominator-section.validated {
+            background: rgba(139, 111, 71, 0.08);
+            border-color: var(--copper);
+        }
+
+        .nominator-title {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            color: var(--forest-green);
+            letter-spacing: 3px;
             margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+            margin-bottom: 20px;
         }
 
         .invitation-form-group {
-            margin-bottom: 25px;
+            flex: 1;
         }
 
         .invitation-form-group label {
             display: block;
             font-family: 'Libre Baskerville', serif;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--forest-green);
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 10px;
+            font-weight: 400;
         }
 
         .invitation-form-group input {
             width: 100%;
-            padding: 15px 20px;
+            padding: 16px 20px;
             border: 2px solid var(--forest-green);
-            background: var(--off-white);
+            background: white;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 16px;
+            font-size: 17px;
             color: var(--forest-green);
             transition: all 0.3s ease;
+            letter-spacing: 0.5px;
         }
 
         .invitation-form-group input:focus {
             outline: none;
             border-color: var(--copper);
-            background: white;
+            box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.1);
+        }
+
+        .invitation-form-group input:disabled {
+            background: var(--off-white);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .validate-btn {
+            font-family: 'Libre Baskerville', serif;
+            padding: 16px 35px;
+            border: 2px solid var(--forest-green);
+            background: var(--forest-green);
+            color: var(--cream);
+            font-size: 12px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            white-space: nowrap;
+        }
+
+        .validate-btn:hover:not(:disabled) {
+            background: var(--copper);
+            border-color: var(--copper);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 111, 71, 0.3);
+        }
+
+        .validate-btn:disabled {
+            background: #ccc;
+            border-color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .validate-btn.validated {
+            background: var(--copper);
+            border-color: var(--copper);
+        }
+
+        .validate-btn.validated::before {
+            content: '✓ ';
+            font-size: 14px;
+        }
+
+        .validation-message {
+            font-size: 14px;
+            margin-top: 10px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .validation-message.success {
+            color: var(--sage);
+        }
+
+        .validation-message.error {
+            color: #c64545;
         }
 
         .invitation-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 35px;
+            gap: 20px;
+            margin-top: 45px;
+            position: relative;
+            z-index: 1;
         }
 
         .invitation-btn {
             font-family: 'Libre Baskerville', serif;
-            padding: 16px 40px;
+            padding: 18px 45px;
             border: 2px solid var(--forest-green);
             background: var(--forest-green);
             color: var(--cream);
             font-size: 14px;
             cursor: pointer;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             transition: all 0.4s ease;
             flex: 1;
+            font-weight: 400;
         }
 
-        .invitation-btn:hover {
-            background: transparent;
-            color: var(--forest-green);
+        .invitation-btn:hover:not(:disabled) {
+            background: var(--copper);
+            border-color: var(--copper);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 111, 71, 0.4);
+        }
+
+        .invitation-btn:disabled {
+            background: #999;
+            border-color: #999;
+            cursor: not-allowed;
+            opacity: 0.5;
         }
 
         .invitation-btn.cancel {
@@ -444,6 +591,24 @@
             .bottles-grid {
                 grid-template-columns: 1fr;
             }
+
+            .invitation-modal-content {
+                padding: 50px 35px;
+            }
+
+            .input-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .validate-btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .invitation-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -451,24 +616,52 @@
     <!-- Invitation Modal -->
     <div class="invitation-modal" id="invitationModal">
         <div class="invitation-modal-content">
-            <h3>By Invitation Only</h3>
-            <p class="subtitle">The Keeper's Circle</p>
-            <p>To acquire bottles from the Ancroft Collection, you must be nominated by two existing Keepers. This ensures that our whisky finds its way to those who will truly appreciate and honor its legacy.</p>
-            <p><strong>Please provide the names of your two nominators:</strong></p>
-            
-            <div class="invitation-form-group">
-                <label>First Keeper's Full Name</label>
-                <input type="text" id="keeper1" placeholder="Enter first nominator's name">
+            <div class="modal-header">
+                <h3>By Invitation Only</h3>
+                <p class="subtitle">The Keeper's Circle</p>
+                <div class="modal-divider"></div>
             </div>
             
-            <div class="invitation-form-group">
-                <label>Second Keeper's Full Name</label>
-                <input type="text" id="keeper2" placeholder="Enter second nominator's name">
+            <p>To acquire bottles from the Ancroft Collection, you must be nominated by two existing Keepers. This ensures that our whisky finds its way to those who will truly appreciate and honor its legacy.</p>
+            <p><strong>Please provide the details of your two nominators:</strong></p>
+            
+            <!-- Nominator 1 Section -->
+            <div class="nominator-section" id="nominator1Section">
+                <div class="nominator-title">Nominator 1</div>
+                <div class="input-row">
+                    <div class="invitation-form-group">
+                        <label>Keeper's Member Number</label>
+                        <input type="text" id="keeper1Number" placeholder="e.g., AK-2024-001">
+                    </div>
+                    <div class="invitation-form-group">
+                        <label>Keeper's Last Name</label>
+                        <input type="text" id="keeper1Name" placeholder="Enter last name">
+                    </div>
+                    <button class="validate-btn" id="validate1Btn" onclick="validateNominator(1)">Validate</button>
+                </div>
+                <div class="validation-message" id="validation1Message"></div>
+            </div>
+            
+            <!-- Nominator 2 Section -->
+            <div class="nominator-section locked" id="nominator2Section">
+                <div class="nominator-title">Nominator 2</div>
+                <div class="input-row">
+                    <div class="invitation-form-group">
+                        <label>Keeper's Member Number</label>
+                        <input type="text" id="keeper2Number" placeholder="e.g., AK-2024-002" disabled>
+                    </div>
+                    <div class="invitation-form-group">
+                        <label>Keeper's Last Name</label>
+                        <input type="text" id="keeper2Name" placeholder="Enter last name" disabled>
+                    </div>
+                    <button class="validate-btn" id="validate2Btn" onclick="validateNominator(2)" disabled>Validate</button>
+                </div>
+                <div class="validation-message" id="validation2Message"></div>
             </div>
             
             <div class="invitation-buttons">
                 <button class="invitation-btn cancel" onclick="closeInvitationModal()">Cancel</button>
-                <button class="invitation-btn" onclick="submitNomination()">Submit Request</button>
+                <button class="invitation-btn" id="submitBtn" onclick="submitNomination()" disabled>Submit Request</button>
             </div>
         </div>
     </div>
@@ -476,7 +669,7 @@
     <!-- Navigation -->
     <nav>
         <a href="index.html" class="logo">
-            <img src="ancroft_wordmark.png" alt="Ancroft" style="height: 35px; width: auto;">
+            <img src="images/Ancroftlogo2.png" alt="Ancroft" style="height: 35px; width: auto;">
         </a>
         <ul class="nav-links">
             <li><a href="index.html#story">Our Story</a></li>
@@ -548,9 +741,9 @@
 
     <!-- Footer -->
     <footer>
-        <img src="ancroft_wordmark.png" alt="Ancroft" style="width: 250px; height: auto; margin: 0 auto 20px; display: block; filter: brightness(0) invert(1);">
+        <img src="images/Ancroftlogo2.png" alt="Ancroft" style="width: 250px; height: auto; margin: 0 auto 20px; display: block; filter: brightness(0) invert(1);">
         <p class="motto">Per Tempus, Per Ignem, Per Aquam</p>
-        <p class="copyright">© 2025 Ancroft Distillery. All rights reserved. | Est. 1743</p>
+        <p class="copyright">© 2025 Ancroft Distillery. All rights reserved. | Est. 1843</p>
     </footer>
 
     <script>
@@ -559,9 +752,11 @@
             window.location.href = 'age-verification.html';
         }
 
-        // Invitation Modal
+        // Invitation Modal State
         let selectedBottle = '';
         let isDirectPurchase = false;
+        let nominator1Validated = false;
+        let nominator2Validated = false;
 
         function showPurchaseModal(bottleName, directPurchase) {
             selectedBottle = bottleName;
@@ -579,21 +774,119 @@
 
         function closeInvitationModal() {
             document.getElementById('invitationModal').classList.remove('active');
-            document.getElementById('keeper1').value = '';
-            document.getElementById('keeper2').value = '';
+            resetModal();
             document.body.style.overflow = 'auto';
         }
 
-        function submitNomination() {
-            const keeper1 = document.getElementById('keeper1').value.trim();
-            const keeper2 = document.getElementById('keeper2').value.trim();
+        function resetModal() {
+            // Reset all fields
+            document.getElementById('keeper1Number').value = '';
+            document.getElementById('keeper1Name').value = '';
+            document.getElementById('keeper2Number').value = '';
+            document.getElementById('keeper2Name').value = '';
             
-            if (!keeper1 || !keeper2) {
-                alert('Please provide the names of both nominators.');
+            // Reset validation states
+            nominator1Validated = false;
+            nominator2Validated = false;
+            
+            // Reset sections
+            document.getElementById('nominator1Section').classList.remove('validated');
+            document.getElementById('nominator2Section').classList.add('locked');
+            document.getElementById('nominator2Section').classList.remove('validated');
+            
+            // Reset messages
+            document.getElementById('validation1Message').textContent = '';
+            document.getElementById('validation2Message').textContent = '';
+            
+            // Reset buttons
+            document.getElementById('validate1Btn').disabled = false;
+            document.getElementById('validate1Btn').classList.remove('validated');
+            document.getElementById('validate1Btn').textContent = 'Validate';
+            
+            document.getElementById('validate2Btn').disabled = true;
+            document.getElementById('validate2Btn').classList.remove('validated');
+            document.getElementById('validate2Btn').textContent = 'Validate';
+            
+            document.getElementById('keeper2Number').disabled = true;
+            document.getElementById('keeper2Name').disabled = true;
+            
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        function validateNominator(nominatorNum) {
+            const numberInput = document.getElementById(`keeper${nominatorNum}Number`);
+            const nameInput = document.getElementById(`keeper${nominatorNum}Name`);
+            const messageDiv = document.getElementById(`validation${nominatorNum}Message`);
+            const validateBtn = document.getElementById(`validate${nominatorNum}Btn`);
+            const section = document.getElementById(`nominator${nominatorNum}Section`);
+            
+            const number = numberInput.value.trim();
+            const name = nameInput.value.trim();
+            
+            // Clear previous message
+            messageDiv.textContent = '';
+            messageDiv.className = 'validation-message';
+            
+            // Validate inputs
+            if (!number || !name) {
+                messageDiv.textContent = 'Please fill in both fields.';
+                messageDiv.classList.add('error');
                 return;
             }
             
-            alert(`Thank you for your request to acquire ${selectedBottle}.\n\nNominators:\n1. ${keeper1}\n2. ${keeper2}\n\nOur Master Keeper will verify your nomination and contact you within 7-10 business days.\n\nPer Tempus, Per Ignem, Per Aquam`);
+            // Simulate validation (in production, this would be an API call)
+            // For demo purposes, accept any input that looks like a member number
+            const isValidFormat = /^AK-\d{4}-\d{3}$/.test(number);
+            
+            if (!isValidFormat) {
+                messageDiv.textContent = 'Invalid member number format. Use: AK-YYYY-XXX';
+                messageDiv.classList.add('error');
+                return;
+            }
+            
+            // Simulate successful validation
+            setTimeout(() => {
+                messageDiv.textContent = `Keeper verified: ${name.toUpperCase()}`;
+                messageDiv.classList.add('success');
+                
+                // Update validation state
+                if (nominatorNum === 1) {
+                    nominator1Validated = true;
+                    validateBtn.classList.add('validated');
+                    validateBtn.textContent = 'Validated';
+                    validateBtn.disabled = true;
+                    section.classList.add('validated');
+                    
+                    // Unlock nominator 2
+                    document.getElementById('nominator2Section').classList.remove('locked');
+                    document.getElementById('keeper2Number').disabled = false;
+                    document.getElementById('keeper2Name').disabled = false;
+                    document.getElementById('validate2Btn').disabled = false;
+                } else {
+                    nominator2Validated = true;
+                    validateBtn.classList.add('validated');
+                    validateBtn.textContent = 'Validated';
+                    validateBtn.disabled = true;
+                    section.classList.add('validated');
+                    
+                    // Enable submit button
+                    document.getElementById('submitBtn').disabled = false;
+                }
+            }, 800);
+        }
+
+        function submitNomination() {
+            if (!nominator1Validated || !nominator2Validated) {
+                alert('Please validate both nominators before submitting.');
+                return;
+            }
+            
+            const keeper1Number = document.getElementById('keeper1Number').value.trim();
+            const keeper1Name = document.getElementById('keeper1Name').value.trim();
+            const keeper2Number = document.getElementById('keeper2Number').value.trim();
+            const keeper2Name = document.getElementById('keeper2Name').value.trim();
+            
+            alert(`Thank you for your request to acquire ${selectedBottle}.\n\nNominators:\n1. ${keeper1Name.toUpperCase()} (${keeper1Number})\n2. ${keeper2Name.toUpperCase()} (${keeper2Number})\n\nOur Master Keeper will verify your nomination and contact you within 7-10 business days.\n\nPer Tempus, Per Ignem, Per Aquam`);
             
             closeInvitationModal();
         }
