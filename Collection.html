@@ -631,7 +631,7 @@
                 <div class="input-row">
                     <div class="invitation-form-group">
                         <label>Keeper's Member Number</label>
-                        <input type="text" id="keeper1Number" placeholder="e.g., JR25672">
+                        <input type="text" id="keeper1Number" placeholder="Enter member number">
                     </div>
                     <div class="invitation-form-group">
                         <label>Keeper's Last Name</label>
@@ -648,7 +648,7 @@
                 <div class="input-row">
                     <div class="invitation-form-group">
                         <label>Keeper's Member Number</label>
-                        <input type="text" id="keeper2Number" placeholder="e.g., JR25672" disabled>
+                        <input type="text" id="keeper2Number" placeholder="Enter member number" disabled>
                     </div>
                     <div class="invitation-form-group">
                         <label>Keeper's Last Name</label>
@@ -839,7 +839,7 @@
             const isValidFormat = /^AK-\d{4}-\d{3}$/.test(number) || number === 'JR25672';
             
             if (!isValidFormat) {
-                messageDiv.textContent = 'Invalid member number. Format: AK-YYYY-XXX or JR25672';
+                messageDiv.textContent = 'Invalid member number format.';
                 messageDiv.classList.add('error');
                 return;
             }
@@ -849,6 +849,18 @@
                 messageDiv.textContent = 'Last name does not match member number.';
                 messageDiv.classList.add('error');
                 return;
+            }
+            
+            // For nominator 2, check if it's different from nominator 1
+            if (nominatorNum === 2) {
+                const keeper1Number = document.getElementById('keeper1Number').value.trim();
+                const keeper1Name = document.getElementById('keeper1Name').value.trim();
+                
+                if (number === keeper1Number || name.toUpperCase() === keeper1Name.toUpperCase()) {
+                    messageDiv.textContent = 'This Keeper has already been added. Please provide a different endorser.';
+                    messageDiv.classList.add('error');
+                    return;
+                }
             }
             
             // Simulate successful validation
@@ -893,7 +905,13 @@
             const keeper2Number = document.getElementById('keeper2Number').value.trim();
             const keeper2Name = document.getElementById('keeper2Name').value.trim();
             
-            alert(`Thank you for submitting your application to the Keeper's Circle for ${selectedBottle}.\n\nEndorsing Keepers:\n1. ${keeper1Name.toUpperCase()} (${keeper1Number})\n2. ${keeper2Name.toUpperCase()} (${keeper2Number})\n\nOur Master Keeper will review your application and verify your endorsements. You will be contacted within 7-10 business days regarding your membership status.\n\nPer Tempus, Per Ignem, Per Aquam`);
+            // Check if both keepers are the same
+            if (keeper1Number === keeper2Number || keeper1Name.toUpperCase() === keeper2Name.toUpperCase()) {
+                alert('Error: Both endorsing Keepers must be different members. Please provide two distinct Keepers.');
+                return;
+            }
+            
+            alert('An error occurred, please contact info@ancroftdis.com');
             
             closeInvitationModal();
         }
