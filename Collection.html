@@ -622,8 +622,8 @@
                 <div class="modal-divider"></div>
             </div>
             
-            <p>To acquire bottles from the Ancroft Collection, you must be nominated by two existing Keepers. This ensures that our whisky finds its way to those who will truly appreciate and honor its legacy.</p>
-            <p><strong>Please provide the details of your two nominators:</strong></p>
+            <p>To acquire bottles from the Ancroft Collection, you must first submit an application to become a member of the Keeper's Circle. Your application requires the endorsement of two existing Keepers who will vouch for your appreciation and understanding of our whisky legacy.</p>
+            <p><strong>Please provide the details of your two endorsing Keepers:</strong></p>
             
             <!-- Nominator 1 Section -->
             <div class="nominator-section" id="nominator1Section">
@@ -631,7 +631,7 @@
                 <div class="input-row">
                     <div class="invitation-form-group">
                         <label>Keeper's Member Number</label>
-                        <input type="text" id="keeper1Number" placeholder="e.g., AK-2024-001">
+                        <input type="text" id="keeper1Number" placeholder="e.g., JR25672">
                     </div>
                     <div class="invitation-form-group">
                         <label>Keeper's Last Name</label>
@@ -648,7 +648,7 @@
                 <div class="input-row">
                     <div class="invitation-form-group">
                         <label>Keeper's Member Number</label>
-                        <input type="text" id="keeper2Number" placeholder="e.g., AK-2024-002" disabled>
+                        <input type="text" id="keeper2Number" placeholder="e.g., JR25672" disabled>
                     </div>
                     <div class="invitation-form-group">
                         <label>Keeper's Last Name</label>
@@ -835,11 +835,18 @@
             }
             
             // Simulate validation (in production, this would be an API call)
-            // For demo purposes, accept any input that looks like a member number
-            const isValidFormat = /^AK-\d{4}-\d{3}$/.test(number);
+            // For demo purposes, accept specific test credentials or the format AK-YYYY-XXX
+            const isValidFormat = /^AK-\d{4}-\d{3}$/.test(number) || number === 'JR25672';
             
             if (!isValidFormat) {
-                messageDiv.textContent = 'Invalid member number format. Use: AK-YYYY-XXX';
+                messageDiv.textContent = 'Invalid member number. Format: AK-YYYY-XXX or JR25672';
+                messageDiv.classList.add('error');
+                return;
+            }
+            
+            // Check if it's the test credential
+            if (number === 'JR25672' && name.toUpperCase() !== 'RUWET') {
+                messageDiv.textContent = 'Last name does not match member number.';
                 messageDiv.classList.add('error');
                 return;
             }
@@ -877,7 +884,7 @@
 
         function submitNomination() {
             if (!nominator1Validated || !nominator2Validated) {
-                alert('Please validate both nominators before submitting.');
+                alert('Please validate both endorsing Keepers before submitting your application.');
                 return;
             }
             
@@ -886,7 +893,7 @@
             const keeper2Number = document.getElementById('keeper2Number').value.trim();
             const keeper2Name = document.getElementById('keeper2Name').value.trim();
             
-            alert(`Thank you for your request to acquire ${selectedBottle}.\n\nNominators:\n1. ${keeper1Name.toUpperCase()} (${keeper1Number})\n2. ${keeper2Name.toUpperCase()} (${keeper2Number})\n\nOur Master Keeper will verify your nomination and contact you within 7-10 business days.\n\nPer Tempus, Per Ignem, Per Aquam`);
+            alert(`Thank you for submitting your application to the Keeper's Circle for ${selectedBottle}.\n\nEndorsing Keepers:\n1. ${keeper1Name.toUpperCase()} (${keeper1Number})\n2. ${keeper2Name.toUpperCase()} (${keeper2Number})\n\nOur Master Keeper will review your application and verify your endorsements. You will be contacted within 7-10 business days regarding your membership status.\n\nPer Tempus, Per Ignem, Per Aquam`);
             
             closeInvitationModal();
         }
